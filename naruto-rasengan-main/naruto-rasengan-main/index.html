@@ -1,0 +1,328 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Rasengan | Hand Tracking</title>
+
+    <!-- MediaPipe Libraries -->
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils/camera_utils.js"
+        crossorigin="anonymous"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/hands/hands.js"
+        crossorigin="anonymous"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/drawing_utils/drawing_utils.js"
+        crossorigin="anonymous"></script>
+
+    <link rel="stylesheet" href="style.css">
+    <script src="script.js" defer></script>
+</head>
+
+<body>
+
+    <div class="page-background"></div>
+    <div class="page-shade"></div>
+
+    <!-- WELCOME PAGE -->
+
+    <main id="welcomeScreen" class="screen welcome-screen">
+
+        <nav class="topbar">
+
+            <a class="brand" href="#">
+                <span class="brand-mark">忍</span>
+                <span>SHINOBI LAB</span>
+            </a>
+
+            <span class="topbar-tag">
+                INTERACTIVE EXPERIENCE
+            </span>
+
+        </nav>
+
+        <section class="hero">
+
+            <div class="hero-copy">
+
+                <p class="eyebrow">
+                    MEDIAPIPE · HAND TRACKING
+                </p>
+
+                <h1>
+                    UNLEASH YOUR
+                    <br>
+                    <span>RASENGAN</span>
+                </h1>
+
+                <p class="hero-description">
+                    Control the power of chakra with your hands.
+                    Open your palm and bring the Rasengan to life.
+                </p>
+
+                <button id="startExperienceBtn" class="primary-button">
+                    START EXPERIENCE ↗
+                </button>
+
+                <p class="small-note">
+                    CAMERA ACCESS IS ONLY REQUESTED WHEN YOU TURN IT ON.
+                </p>
+
+            </div>
+
+            <div class="hero-art">
+
+                <div class="chakra-ring ring-one"></div>
+                <div class="chakra-ring ring-two"></div>
+
+                <div class="chakra-core">
+                    螺<br>旋<br>丸
+                </div>
+
+                <span class="art-label label-top">
+                    CHAKRA CONTROL
+                </span>
+
+                <span class="art-label label-bottom">
+                    HAND POWER
+                </span>
+
+            </div>
+
+        </section>
+
+        <footer class="welcome-footer">
+            <span>RASENGAN PROJECT</span>
+            <span>FOCUS · CONTROL · CREATE</span>
+        </footer>
+
+    </main>
+
+
+    <!-- HAND TRACKING PAGE -->
+
+    <main id="experienceScreen" class="screen experience-screen" hidden>
+
+        <header class="experience-header">
+
+            <button id="backBtn" class="text-button">
+                ← HOME
+            </button>
+
+            <div class="experience-brand">
+
+                <span class="brand-mark">忍</span>
+
+                <span>
+                    RASENGAN
+                    <small>HAND TRACKING</small>
+                </span>
+
+            </div>
+
+            <div id="cameraStatus" class="status-pill">
+                <span class="status-dot"></span>
+                CAMERA OFF
+            </div>
+
+        </header>
+
+
+        <section class="workspace">
+
+            <div class="workspace-heading">
+
+                <div>
+                    <p class="eyebrow">LIVE EXPERIENCE</p>
+
+                    <h2>
+                        CHAKRA <span>CONTROL</span>
+                    </h2>
+                </div>
+
+                <p class="instruction">
+                    Show your hands to the camera.
+                    <br>
+                    Open your palm to activate the Rasengan.
+                </p>
+
+            </div>
+
+
+            <!-- MAIN TWO-COLUMN LAYOUT -->
+
+            <div class="workspace-layout">
+
+
+                <!-- LEFT SIDE: CAMERA -->
+
+                <div class="camera-panel">
+
+                    <div class="camera-frame">
+
+                        <div class="frame-corner corner-tl"></div>
+                        <div class="frame-corner corner-tr"></div>
+                        <div class="frame-corner corner-bl"></div>
+                        <div class="frame-corner corner-br"></div>
+
+                        <div id="cameraPlaceholder" class="camera-placeholder">
+
+                            <div class="placeholder-icon">◉</div>
+
+                            <h3>YOUR CAMERA VIEW</h3>
+
+                            <p>
+                                Turn on the camera to start hand tracking.
+                            </p>
+
+                        </div>
+
+                        <video id="cam" autoplay playsinline muted></video>
+
+                        <canvas id="skeleton"></canvas>
+
+                        <video
+                            class="rasengan"
+                            data-slot="0"
+                            src="assets/rasengan.mp4"
+                            muted autoplay loop playsinline>
+                        </video>
+
+                        <video
+                            class="rasengan"
+                            data-slot="1"
+                            src="assets/rasengan.mp4"
+                            muted autoplay loop playsinline>
+                        </video>
+
+                        <div class="camera-overlay">
+                            <span>LIVE FEED</span>
+                            <span>HAND TRACKING SYSTEM</span>
+                        </div>
+
+                    </div>
+
+
+                    <!-- CAMERA BUTTONS -->
+
+                    <div class="controls">
+
+                        <button id="cameraOnBtn" class="primary-button">
+                            ▶ TURN ON CAMERA
+                        </button>
+
+                        <button id="cameraOffBtn" class="secondary-button" disabled>
+                            ■ TURN OFF CAMERA
+                        </button>
+
+                    </div>
+
+                </div>
+
+
+                <!-- RIGHT SIDE: NARUTO & INFORMATION -->
+
+                <aside class="info-panel">
+
+
+                    <!-- NARUTO SECTION -->
+
+                    <div class="naruto-card">
+
+                        <div class="info-card-heading">
+                            <span class="eyebrow">SHINOBI POWER</span>
+                            <span class="chakra-symbol">忍</span>
+                        </div>
+
+                        <div class="naruto-visual">
+                            <div class="naruto-glow"></div>
+                            <div class="naruto-text">
+                                <span>THE NINJA WAY</span>
+                                <h2>NARUTO</h2>
+                                <p>RASENGAN USER</p>
+                            </div>
+                        </div>
+
+                        <p class="naruto-caption">
+                            MASTER YOUR CHAKRA
+                        </p>
+
+                    </div>
+
+
+                    <!-- TRACKING STATUS -->
+
+                    <div class="tracking-card">
+
+                        <p class="eyebrow">TRACKING STATUS</p>
+
+                        <h3 id="trackingLabel">
+                            WAITING FOR CAMERA
+                        </h3>
+
+                        <div class="status-line">
+                            <span class="status-indicator"></span>
+                            <span>HAND DETECTION</span>
+                        </div>
+
+                        <p id="message" class="message">
+                            Camera is off. Press Turn on camera when you're ready.
+                        </p>
+
+                    </div>
+
+
+                    <!-- HAND INFORMATION -->
+
+                    <div class="stats-card">
+
+                        <p class="eyebrow">CHAKRA INFORMATION</p>
+
+                        <div class="stat-row">
+                            <span>Hand Tracking</span>
+                            <span class="stat-value">READY</span>
+                        </div>
+
+                        <div class="stat-row">
+                            <span>Palm Detection</span>
+                            <span class="stat-value">ACTIVE</span>
+                        </div>
+
+                        <div class="stat-row">
+                            <span>Rasengan System</span>
+                            <span class="stat-value">READY</span>
+                        </div>
+
+                    </div>
+
+                </aside>
+
+            </div>
+
+        </section>
+
+
+        <!-- FOOTER -->
+
+        <footer class="experience-footer">
+
+            <span>
+                LEFT HAND
+                <i class="legend orange"></i>
+            </span>
+
+            <span>
+                RIGHT HAND
+                <i class="legend cyan"></i>
+            </span>
+
+            <span>POWERED BY MEDIAPIPE</span>
+
+        </footer>
+
+    </main>
+
+</body>
+</html>
